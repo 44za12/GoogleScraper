@@ -8,8 +8,9 @@ from selenium.webdriver.chrome.options import Options
 options = Options()
 options.add_argument('--headless')
 options.add_argument('--disable-gpu')
-options.binary_location = '/app/.apt/usr/bin/google-chrome'
-driver = webdriver.Chrome('/app/.chromedriver/bin/chromedriver',options=options)
+# options.binary_location = '/app/.apt/usr/bin/google-chrome'
+chromedriverpath = 'ENTER YOUR CHROME DRIVER PATH HERE FOR SELENIUM'
+driver = webdriver.Chrome(chromedriverpath,options=options)
 driver.implicitly_wait(15)
 def cleanhtml(raw_html):
 	cleanr = re.compile('<.*?>')
@@ -92,4 +93,3 @@ def scrape(query):
 	t.to_excel(writer,'Sheet1', encoding='utf-8', index=False, columns=header)
 	writer.save()
 	return filename
-scrape("Salons in Delhi")
