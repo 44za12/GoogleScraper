@@ -9,7 +9,7 @@ options = Options()
 options.add_argument('--headless')
 options.add_argument('--disable-gpu')
 # options.binary_location = '/app/.apt/usr/bin/google-chrome'
-chromedriverpath = 'ENTER YOUR CHROME DRIVER PATH HERE FOR SELENIUM'
+chromedriverpath = 'chromedriver.exe'
 driver = webdriver.Chrome(chromedriverpath,options=options)
 driver.implicitly_wait(15)
 def cleanhtml(raw_html):
@@ -49,8 +49,19 @@ def getLocation(body):
 		city = str(city[0])
 	return city
 def getPhone(body):
-	body = str(body)
-	phone = cleanhtml(body)
+	try:
+		body = str(body)
+		phone = cleanhtml(body)
+		phone = phone.split("·")
+		try:
+			phone = phone[2]
+		except:
+			try:
+				phone = phone[1]
+			except:
+				phone = phone
+	except:
+		phone = "Not found!"
 	phone = phone.replace(" ","")
 	return phone
 def scrape(query):
@@ -60,20 +71,7 @@ def scrape(query):
 	url = google+"/search?q="+query
 	driver.get(url)
 	driver.find_elements_by_xpath("//span[contains(text(), 'More places')]")[0].click()
-	places = driver.find_elements_by_xpath('//a[@role="link"]')
-	for i in places:
-		place = {}
-		n = i.get_attribute('innerHTML')
-		temp = re.findall(r'<div>(.*?)</div>',n)
-		place['Name'] = getName(temp[0])
-		place['Stars'] = getStars(temp[1])
-		place['Reviews'] = getReviewCount(temp[1])
-		place['Location'] = getLocation(temp[2])
-		place['Phone'] = getPhone(temp[3])
-		results.append(place)
-	for y in range(2,3):
-		z = 0
-		driver.find_element_by_xpath('//a[@class="pn"]').click()
+	for y in range(4):
 		places = driver.find_elements_by_xpath('//a[@role="link"]')
 		for i in places:
 			place = {}
@@ -83,9 +81,16 @@ def scrape(query):
 			place['Stars'] = getStars(temp[1])
 			place['Reviews'] = getReviewCount(temp[1])
 			place['Location'] = getLocation(temp[2])
-			place['Phone'] = getPhone(temp[3])
+			try:
+				place['Phone'] = getPhone(temp[3])
+			except:
+				place['Phone'] = "Not Found!"
 			results.append(place)
 		sleep(5)
+		try:
+			driver.find_element_by_xpath('//a[@id="pnnext"]').click()
+		except:
+			pass
 	header = results[0].keys()
 	t = DataFrame(results)
 	filename = "gs"+str(randint(0,2324))+".xlsx"
