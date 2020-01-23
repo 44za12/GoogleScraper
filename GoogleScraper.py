@@ -9,7 +9,7 @@ options = Options()
 options.add_argument('--headless')
 options.add_argument('--disable-gpu')
 # options.binary_location = '/app/.apt/usr/bin/google-chrome'
-chromedriverpath = 'chromedriver.exe'
+chromedriverpath = 'chrome_driver_path_here'
 driver = webdriver.Chrome(chromedriverpath,options=options)
 driver.implicitly_wait(15)
 def cleanhtml(raw_html):
