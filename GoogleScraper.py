@@ -9,7 +9,7 @@ options = Options()
 options.add_argument('--headless')
 options.add_argument('--disable-gpu')
 # options.binary_location = '/app/.apt/usr/bin/google-chrome'
-chromedriverpath = 'CHROMEDRIVERPATH HERE'
+chromedriverpath = 'chromedriver.exe'
 driver = webdriver.Chrome(chromedriverpath,options=options)
 driver.implicitly_wait(15)
 def cleanhtml(raw_html):
@@ -71,7 +71,7 @@ def scrape(query):
 	url = google+"/search?q="+query
 	driver.get(url)
 	driver.find_elements_by_xpath("//span[contains(text(), 'More places')]")[0].click()
-	for y in range(4):
+	for y in range(15):
 		places = driver.find_elements_by_xpath('//a[@role="link"]')
 		for i in places:
 			place = {}
@@ -95,6 +95,8 @@ def scrape(query):
 	t = DataFrame(results)
 	filename = "gs"+str(randint(0,2324))+".xlsx"
 	writer = ExcelWriter(filename, engine='xlsxwriter')
+	t.sort_values("Phone", inplace=True) 
+	t.drop_duplicates(keep=False, inplace=True)
 	t.to_excel(writer,'Sheet1', encoding='utf-8', index=False, columns=header)
 	writer.save()
 	return filename
