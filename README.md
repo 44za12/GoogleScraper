@@ -1,14 +1,61 @@
 # GoogleScraper
-A working google places scraper without using google places API
+A modern Google Places scraper that works without the Google Places API. Extracts business information including names, ratings, reviews, contact details, and social profiles.
 
-## Installation & Setup
-1. Clone the repo using git clone https://github.com/44za12/GoogleScraper.git
-2. Change the directory to GoogleScraper using cd GoogleScraper
-3. Install all the requirements using pip install -r requirements.txt
-4. Open GoogleScraper.py in any text editor and edit the line 12, input your chromedriver path there
-5. Open python3 using python command in your terminal
-6. Import the file using the statement from GoogleScraper import scrape
-7. Now just type scrape(query)
-8. Your query can be anything for example "Salons in chennai"
+## Features
+- No API key required
+- Extracts comprehensive business data:
+  - Business name
+  - Rating and review count
+  - Address
+  - Phone number
+  - Website
+  - Social media profiles
+- Human-like behavior to avoid detection
+- Results saved to CSV format
+- Built with Playwright for reliable web automation
 
-After the successful execution of the function you'll find an excel file in the working directory
+## Installation
+1. Clone the repository:
+```bash
+git clone https://github.com/44za12/GoogleScraper.git
+cd GoogleScraper
+```
+
+2. Install dependencies:
+```bash
+pip install -r requirements.txt
+```
+
+
+3. Install Playwright browsers:
+```bash
+playwright install
+```
+
+4. Change the query in the GoogleScraper.py file
+
+5. Run the scraper:
+```bash
+python GoogleScraper.py
+```
+
+The script will save results to a timestamped CSV file (e.g., `google_places_20240312_143022.csv`)
+
+## Example Output
+The CSV file will contain the following columns:
+- Name: Business name
+- Rating: Customer rating (out of 5)
+- Reviews: Number of reviews
+- Address: Physical location
+- Phone: Contact number
+- Website: Business website
+- Profiles: Social media and other web profiles
+
+## Notes
+- Uses random delays and human-like behavior to avoid detection
+- For educational purposes only
+
+## Requirements
+- Python 3.10+
+- Playwright
+- Other dependencies listed in requirements.txt
