@@ -19,7 +19,7 @@ trio==0.28.0
 trio-websocket==0.11.1
 typing-extensions==4.12.2
 tzdata==2025.1
-urllib3==2.3.0
+urllib3==2.5.0
 websocket-client==1.8.0
 wsproto==1.2.0
 xlsxwriter==3.2.2
